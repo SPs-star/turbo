@@ -1,0 +1,28 @@
+    1 # This workflow is a general-purpose Gemini assistant.
+    2 #
+    3 # It can be triggered manually from the "Actions" tab of your repository.
+    4 #
+    5 # To learn more, visit https://github.com/google-github-actions/run-gemini-cli
+    6 #
+    7 name: Gemini Assistant
+    8 on:
+    9   workflow_dispatch: {}
+   10
+   11 permissions:
+   12   contents: read
+   13   issues: write
+   14   pull_requests: write
+   15
+   16 jobs:
+   17   gemini-assistant:
+   18     runs-on: ubuntu-latest
+   19     steps:
+   20       - uses: actions/checkout@v4
+   21       - id: 'auth'
+   22         uses: 'google-github-actions/auth@v2'
+   23         with:
+   24           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+   25       - name: Run Gemini CLI
+   26         uses: google-github-actions/run-gemini-cli@v1
+   27         with:
+   28           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
